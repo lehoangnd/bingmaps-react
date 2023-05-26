@@ -10,6 +10,7 @@ export default function BingMapsReact({
   pushPinsWithInfoboxes,
   viewOptions,
   width,
+  getLocation,
 }) {
   // refs
   const mapContainer = useRef(null);
@@ -114,6 +115,14 @@ export default function BingMapsReact({
         credentials: bingMapsKey,
       });
     }
+    
+    console.log('getLocation: ', getLocation);
+    if (getLocation) {
+      Maps.Events.addHandler(map.current, 'click', function (event) {
+        getLocation(event?.location)
+      })
+    }
+    
     // set viewOptions, if any
     if (viewOptions) {
       setMapViewOptions(map.current, viewOptions, Maps);
